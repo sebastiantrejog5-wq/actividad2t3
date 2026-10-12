@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#7A1F3D">
+
+    <title>Generador de Códigos QR | TecNL</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO INSTITUCIONAL -->
+    <header class="encabezado">
+        <div class="marca">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/17/Tecnologico_Nacional_de_Mexico.svg"
+                alt="Logo TecNM">
+
+            <div>
+                <p class="sobretitulo">
+                    INSTITUTO TECNOLÓGICO DE NUEVO LEÓN
+                </p>
+
+                <h1>Generador de Códigos QR</h1>
+
+                <p class="subtitulo">
+                    Ingeniería en Sistemas Computacionales
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#crear">Crear QR</a>
+            <a href="#escanear">Consultar QR</a>
+            <a href="#informacion">Acerca del proyecto</a>
+        </nav>
+    </header>
+
+    <main class="pagina">
+
+        <!-- PRESENTACIÓN -->
+        <section class="presentacion">
+            <span class="etiqueta">PROYECTO WEB · TECNL</span>
+
+            <h2>Crea tu código QR en unos pasos</h2>
+
+            <p>
+                Escribe la información, personaliza los colores y genera
+                un código QR para guardar o compartir. También puedes
+                escanear códigos con la cámara de tu dispositivo.
+            </p>
+        </section>
+
+        <!-- GENERADOR QR -->
+        <section id="crear" class="panel">
+
+            <div class="panel-titulo">
+                <div>
+                    <span class="numero">01</span>
+                    <h2>Crear código QR</h2>
+                </div>
+
+                <p>Completa los datos y revisa la vista previa.</p>
+            </div>
+
+            <!-- TIPOS DE QR -->
+            <div class="tipos">
+                <button class="tipo activo" data-tipo="url" type="button">
+                    🌐 Enlace
+                </button>
+
+                <button class="tipo" data-tipo="texto" type="button">
+                    📝 Texto
+                </button>
+
+                <button class="tipo" data-tipo="wifi" type="button">
+                    📶 Wi-Fi
+                </button>
+
+                <button class="tipo" data-tipo="correo" type="button">
+                    ✉️ Correo
+                </button>
+            </div>
+
+            <div class="rejilla">
+
+                <!-- FORMULARIO -->
+                <div class="formulario">
+
+                    <label id="etiquetaContenido" for="contenido">
+                        Enlace o URL
+                    </label>
+
+                    <textarea
+                        id="contenido"
+                        rows="3"
+                        placeholder="https://ejemplo.com"></textarea>
+
+                    <!-- CAMPOS WI-FI -->
+                    <div id="camposWifi" class="campos-extra oculto">
+
+                        <label for="nombreWifi">
+                            Nombre de la red Wi-Fi
+                        </label>
+
+                        <input
+                            id="nombreWifi"
+                            type="text"
+                            placeholder="Nombre de tu red">
+
+                        <label for="claveWifi">Contraseña</label>
+
+                        <input
+                            id="claveWifi"
+                            type="text"
+                            placeholder="Contraseña de la red">
+
+                        <label for="seguridadWifi">
+                            Seguridad de la red
+                        </label>
+
+                        <select id="seguridadWifi">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Sin contraseña</option>
+                        </select>
+                    </div>
+
+                    <!-- CAMPOS CORREO -->
+                    <div id="camposCorreo" class="campos-extra oculto">
+
+                        <label for="correoDestino">
+                            Correo destinatario
+                        </label>
+
+                        <input
+                            id="correoDestino"
+                            type="email"
+                            placeholder="correo@ejemplo.com">
+
+                        <label for="asuntoCorreo">
+                            Asunto del correo
+                        </label>
+
+                        <input
+                            id="asuntoCorreo"
+                            type="text"
+                            placeholder="Asunto opcional">
+                    </div>
+
+                    <!-- PERSONALIZACIÓN -->
+                    <div class="opciones">
+
+                        <div>
+                            <label for="colorQR">
+                                Color del código
+                            </label>
+
+                            <input
+                                id="colorQR"
+                                type="color"
+                                value="#7A1F3D">
+                        </div>
+
+                        <div>
+                            <label for="colorFondo">
+                                Color de fondo
+                            </label>
+
+                            <input
+                                id="colorFondo"
+                                type="color"
+                                value="#FFFFFF">
+                        </div>
+
+                        <div>
+                            <label for="tamanoQR">Tamaño</label>
+
+                            <select id="tamanoQR">
+                                <option value="180">Pequeño</option>
+                                <option value="240" selected>Mediano</option>
+                                <option value="320">Grande</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <p class="consejo">
+                        Consejo: utiliza un color oscuro para el código
+                        y un fondo claro para facilitar su lectura.
+                    </p>
+
+                    <div class="acciones">
+                        <button
+                            id="botonGenerar"
+                            class="boton-principal"
+                            type="button">
+                            Generar código QR
+                        </button>
+
+                        <button
+                            id="botonLimpiar"
+                            class="boton-secundario"
+                            type="button">
+                            Restablecer
+                        </button>
+                    </div>
+
+                    <p id="mensaje" role="status" aria-live="polite"></p>
+
+                </div>
+
+                <!-- VISTA PREVIA -->
+                <aside class="vista-previa">
+
+                    <div class="vista-cabecera">
+                        <span>VISTA PREVIA</span>
+                        <span class="indicador"></span>
+                    </div>
+
+                    <div id="codigoQR" class="lienzo-qr">
+                        <div class="marcador-qr">
+                            <span>QR</span>
+                            <small>Tu código aparecerá aquí</small>
+                        </div>
+                    </div>
+
+                    <p class="texto-previa">
+                        Tu código QR aparecerá en esta área.
+                    </p>
+
+                    <button
+                        id="botonDescargar"
+                        class="boton-descarga"
+                        type="button"
+                        disabled>
+                        Descargar PNG
+                    </button>
+
+                </aside>
+
+            </div>
+        </section>
+
+        <!-- LECTOR QR -->
+        <section id="escanear" class="panel">
+
+            <div class="panel-titulo">
+                <div>
+                    <span class="numero">02</span>
+                    <h2>Consultar código QR</h2>
+                </div>
+
+                <p>Escanea un código con la cámara de tu dispositivo.</p>
+            </div>
+
+            <div class="rejilla-lector">
+
+                <div>
+                    <div id="lectorQR"></div>
+
+                    <p class="nota-camara">
+                        Permite el acceso a la cámara cuando el navegador
+                        lo solicite. Puede ser necesario utilizar HTTPS
+                        o un servidor local.
+                    </p>
+                </div>
+
+                <div class="resultado-contenedor">
+
+                    <h3>Resultado del escaneo</h3>
+
+                    <div id="resultado" class="resultado">
+                        Todavía no se ha escaneado ningún código.
+                    </div>
+
+                    <button
+                        id="copiarResultado"
+                        class="boton-secundario"
+                        type="button"
+                        disabled>
+                        Copiar resultado
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- INFORMACIÓN DEL PROYECTO -->
+        <section id="informacion" class="panel informacion">
+
+            <h2>Acerca de la actividad</h2>
+
+            <p>
+                Esta página la hicimos como parte de un proyecto escolar para poner en práctica lo que hemos aprendido sobre el desarrollo de páginas web. La idea es crear una herramienta sencilla que nos permita generar códigos QR y también leerlos usando la cámara del dispositivo.
+
+Buscamos que la página sea fácil de usar, que funcione tanto en computadora como en celular y que tenga diferentes opciones para crear códigos QR, por ejemplo, para enlaces, textos, redes Wi-Fi y correos electrónicos.
+
+Con este proyecto también aprendimos a utilizar librerías que nos ayudan a agregar funciones a una página web y a darle un diseño más agradable para los usuarios..
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>
+            <strong>
+                INSTITUTO TECNOLÓGICO DE NUEVO LEÓN · EQUIPO 1
+            </strong>
+        </p>
+
+        <p>
+            Sebastián Trejo González |
+            Julio Cesar Mateo Martinez |
+            Brayan Alfonso Leyva Azuara |
+            William Castillo Alvarez
+        </p>
+    </footer>
+
+    <!-- LIBRERÍAS QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script src="https://unpkg.com/html5-qrcode"
+        type="text/javascript"></script>
+
+    <!-- JAVASCRIPT DEL PROYECTO -->
+    <script src="script.js"></script>
+
+</body>
+</html>
